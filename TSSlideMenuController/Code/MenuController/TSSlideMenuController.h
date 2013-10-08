@@ -17,6 +17,8 @@
 @property (nonatomic, assign) CGFloat animationDuration;
 @property (nonatomic, assign) CGFloat hiddingTreshold;
 
+@property (nonatomic, assign) BOOL dragable;
+
 - (void)presentSlideMenu;
 
 - (void)dismissSlideMenu;

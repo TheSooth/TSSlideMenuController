@@ -36,6 +36,7 @@ static const CGFloat kDefaultAnimationDuration = 0.2f;
 {
     [super viewDidLoad];
     
+    self.dragable = YES;
     self.animationDuration = kDefaultAnimationDuration;
     
     self.view.frame = CGRectOffset(self.view.frame, -CGRectGetWidth(self.view.frame), 0);
@@ -107,15 +108,18 @@ static const CGFloat kDefaultAnimationDuration = 0.2f;
 
 - (void)setupPanGesture
 {
-    self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-    [self.panGesture setMaximumNumberOfTouches:2];
+    if (self.dragable) {
+        self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        [self.panGesture setMaximumNumberOfTouches:2];
     
-    [self.view addGestureRecognizer:self.panGesture];
+        [self.view addGestureRecognizer:self.panGesture];
+    }
 }
 
 - (void)removePanGesture
 {
     [self.view removeGestureRecognizer:self.panGesture];
+    self.panGesture = nil;
 }
 
 
