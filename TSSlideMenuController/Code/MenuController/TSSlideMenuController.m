@@ -54,13 +54,19 @@ static const CGFloat kDefaultAnimationDuration = 0.2f;
     self.dimmedView.backgroundColor = [UIColor blackColor];
     
     self.hiddingTreshold = kDefaultHiddingThreshold;
-
+    
     [self.view addSubview:self.dimmedView];
     [self.view addSubview:self.contentView];
 }
 
 #pragma mark -
 #pragma mark - SlideMenu actions
+
+- (void)viewWillLayoutSubviews
+{
+    
+    [super viewWillLayoutSubviews];
+}
 
 - (void)presentSlideMenu
 {
@@ -95,6 +101,7 @@ static const CGFloat kDefaultAnimationDuration = 0.2f;
     
     [UIView animateWithDuration:self.animationDuration animations:^{
         [weakSelf setContentViewOriginByX:0];
+        if (self.dragable)
             weakSelf.dimmedView.alpha = kDimmedViewAlpha;
     } completion:^(BOOL finished) {
         if (aCompletionBlock) {
@@ -111,7 +118,7 @@ static const CGFloat kDefaultAnimationDuration = 0.2f;
     if (self.dragable) {
         self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
         [self.panGesture setMaximumNumberOfTouches:2];
-    
+        
         [self.view addGestureRecognizer:self.panGesture];
     }
 }
